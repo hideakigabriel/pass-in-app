@@ -65,14 +65,14 @@ export function AttendeeList() {
                 key={id}
                 className="border-b border-white/10 hover:bg-white/5"
               >
-                <TableCell className="py-3 px-4 text-sm text-zinc-300">
+                <TableCell>
                   <input
                     className="size-4 bg-black/20 rounded border border-white/10 cursor-pointer checked:bg-orange-400 text-orange-400"
                     type="checkbox"
                   />
                 </TableCell>
-                <TableCell className="py-3 px-4 text-sm text-zinc-300">64ba964b</TableCell>
-                <TableCell className="py-3 px-4 text-sm text-zinc-300">
+                <TableCell>64ba964b</TableCell>
+                <TableCell>
                   <div className="flex flex-col gap-1">
                     <span className="font-semibold text-white">
                       Gabriel Hideaki Souza Kumai
@@ -80,13 +80,13 @@ export function AttendeeList() {
                     <span>hideaki@design.com.br</span>
                   </div>
                 </TableCell>
-                <TableCell className="py-3 px-4 text-sm text-zinc-300">
+                <TableCell>
                   7 dias atrás
                 </TableCell>
-                <TableCell className="py-3 px-4 text-sm text-zinc-300">
+                <TableCell>
                   3 dias atrás
                 </TableCell>
-                <TableCell className="py-3 px-4 text-sm text-zinc-300">
+                <TableCell>
                   <IconButton
                     transparent
                     className="bg-black/20 border border-white/10 rounded-md p-1.5"
@@ -100,7 +100,7 @@ export function AttendeeList() {
         </tbody>
         <tfoot>
           <tr>
-            <TableCell className="py-3 px-4 text-sm text-zinc-300" colSpan={3}>
+            <TableCell colSpan={3}>
               Mostrando 10 de 228 itens
             </TableCell>
             <TableCell
