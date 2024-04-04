@@ -9,6 +9,7 @@ import {
 import { IconButton } from "./icon-button";
 import { Table } from "./table/table";
 import { TableHeader } from "./table/table-header";
+import { TableCell } from "./table/table-cell";
 
 export function AttendeeList() {
   return (
@@ -64,45 +65,45 @@ export function AttendeeList() {
                 key={id}
                 className="border-b border-white/10 hover:bg-white/5"
               >
-                <td className="py-3 px-4 text-sm text-zinc-300">
+                <TableCell className="py-3 px-4 text-sm text-zinc-300">
                   <input
                     className="size-4 bg-black/20 rounded border border-white/10 cursor-pointer checked:bg-orange-400 text-orange-400"
                     type="checkbox"
                   />
-                </td>
-                <td className="py-3 px-4 text-sm text-zinc-300">64ba964b</td>
-                <td className="py-3 px-4 text-sm text-zinc-300">
+                </TableCell>
+                <TableCell className="py-3 px-4 text-sm text-zinc-300">64ba964b</TableCell>
+                <TableCell className="py-3 px-4 text-sm text-zinc-300">
                   <div className="flex flex-col gap-1">
                     <span className="font-semibold text-white">
                       Gabriel Hideaki Souza Kumai
                     </span>
                     <span>hideaki@design.com.br</span>
                   </div>
-                </td>
-                <td className="py-3 px-4 text-sm text-zinc-300">
+                </TableCell>
+                <TableCell className="py-3 px-4 text-sm text-zinc-300">
                   7 dias atrás
-                </td>
-                <td className="py-3 px-4 text-sm text-zinc-300">
+                </TableCell>
+                <TableCell className="py-3 px-4 text-sm text-zinc-300">
                   3 dias atrás
-                </td>
-                <td className="py-3 px-4 text-sm text-zinc-300">
+                </TableCell>
+                <TableCell className="py-3 px-4 text-sm text-zinc-300">
                   <IconButton
                     transparent
                     className="bg-black/20 border border-white/10 rounded-md p-1.5"
                   >
                     <MoreHorizontal className="size-4" />
                   </IconButton>
-                </td>
+                </TableCell>
               </tr>
             );
           })}
         </tbody>
         <tfoot>
           <tr>
-            <td className="py-3 px-4 text-sm text-zinc-300" colSpan={3}>
+            <TableCell className="py-3 px-4 text-sm text-zinc-300" colSpan={3}>
               Mostrando 10 de 228 itens
-            </td>
-            <td
+            </TableCell>
+            <TableCell
               className="py-3 px-4 text-sm text-zinc-300 text-right"
               colSpan={3}
             >
@@ -123,7 +124,7 @@ export function AttendeeList() {
                   </IconButton>
                 </div>
               </div>
-            </td>
+            </TableCell>
           </tr>
         </tfoot>
       </Table>
