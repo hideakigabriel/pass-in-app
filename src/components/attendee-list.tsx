@@ -10,6 +10,7 @@ import { IconButton } from "./icon-button";
 import { Table } from "./table/table";
 import { TableHeader } from "./table/table-header";
 import { TableCell } from "./table/table-cell";
+import { TableRow } from "./table/table-row";
 
 export function AttendeeList() {
   return (
@@ -61,7 +62,7 @@ export function AttendeeList() {
         <tbody>
           {Array.from({ length: 10 }).map((_, id) => {
             return (
-              <tr
+              <TableRow
                 key={id}
                 className="border-b border-white/10 hover:bg-white/5"
               >
@@ -94,7 +95,7 @@ export function AttendeeList() {
                     <MoreHorizontal className="size-4" />
                   </IconButton>
                 </TableCell>
-              </tr>
+              </TableRow>
             );
           })}
         </tbody>
