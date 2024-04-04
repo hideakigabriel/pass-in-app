@@ -6,13 +6,27 @@ import {
   ChevronRight,
   ChevronsRight,
 } from "lucide-react";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import "dayjs/locale/pt-br"
 import { IconButton } from "./icon-button";
 import { Table } from "./table/table";
 import { TableHeader } from "./table/table-header";
 import { TableCell } from "./table/table-cell";
 import { TableRow } from "./table/table-row";
+import { ChangeEvent, useState } from "react";
+import { attendees } from "../data/attendees";
+
+dayjs.locale("pt-br")
+dayjs.extend(relativeTime);
 
 export function AttendeeList() {
+  const [search, setSearch] = useState("");
+
+  function onSearchInputChanged(event: ChangeEvent<HTMLInputElement>) {
+    setSearch(event.target.value);
+  }
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex gap-3 items-center">
@@ -20,13 +34,13 @@ export function AttendeeList() {
         <div className="flex items-center gap-3 px-3 w-72 py-1.5 border border-white/10 rounded-lg">
           <Search className="size-4 text-emerald-300" />
           <input
-            className="bg-transparent flex-1 border-0 p-0 text-sm outline-none"
+            className="bg-transparent flex-1 border-0 p-0 text-sm outline-none focus:ring-0"
             type="text"
             placeholder="Buscar participante..."
-            name=""
-            id=""
+            onChange={onSearchInputChanged}
           />
         </div>
+        {search}
       </div>
 
       <Table>
@@ -41,18 +55,10 @@ export function AttendeeList() {
                 type="checkbox"
               />
             </TableHeader>
-            <TableHeader>
-              Código
-            </TableHeader>
-            <TableHeader>
-              Participante
-            </TableHeader>
-            <TableHeader>
-              Data de inscrição
-            </TableHeader>
-            <TableHeader>
-              Data do check-in
-            </TableHeader>
+            <TableHeader>Código</TableHeader>
+            <TableHeader>Participante</TableHeader>
+            <TableHeader>Data de inscrição</TableHeader>
+            <TableHeader>Data do check-in</TableHeader>
             <th
               style={{ width: 64 }}
               className="py-3 px-4 text-sm font-semibold text-left"
@@ -60,10 +66,10 @@ export function AttendeeList() {
           </tr>
         </thead>
         <tbody>
-          {Array.from({ length: 10 }).map((_, id) => {
+          {attendees.map((attendee) => {
             return (
               <TableRow
-                key={id}
+                key={attendee.id}
                 className="border-b border-white/10 hover:bg-white/5"
               >
                 <TableCell>
@@ -72,21 +78,17 @@ export function AttendeeList() {
                     type="checkbox"
                   />
                 </TableCell>
-                <TableCell>64ba964b</TableCell>
+                <TableCell>{attendee.id}</TableCell>
                 <TableCell>
                   <div className="flex flex-col gap-1">
                     <span className="font-semibold text-white">
-                      Gabriel Hideaki Souza Kumai
+                      {attendee.name}
                     </span>
-                    <span>hideaki@design.com.br</span>
+                    <span>{attendee.email}</span>
                   </div>
                 </TableCell>
-                <TableCell>
-                  7 dias atrás
-                </TableCell>
-                <TableCell>
-                  3 dias atrás
-                </TableCell>
+                <TableCell>{dayjs().to(attendee.createdAt)}</TableCell>
+                <TableCell>{dayjs().to(attendee.checkedInAt)}</TableCell>
                 <TableCell>
                   <IconButton
                     transparent
@@ -101,13 +103,8 @@ export function AttendeeList() {
         </tbody>
         <tfoot>
           <tr>
-            <TableCell colSpan={3}>
-              Mostrando 10 de 228 itens
-            </TableCell>
-            <TableCell
-              className="text-right"
-              colSpan={3}
-            >
+            <TableCell colSpan={3}>Mostrando 10 de 228 itens</TableCell>
+            <TableCell className="text-right" colSpan={3}>
               <div className="inline-flex items-center gap-8">
                 <span>Página 1 de 23</span>
                 <div className="flex gap-1.5">
