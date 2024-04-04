@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { IconButton } from "./icon-button";
 import { Table } from "./table/table";
+import { TableHeader } from "./table/table-header";
 
 export function AttendeeList() {
   return (
@@ -29,7 +30,7 @@ export function AttendeeList() {
       <Table>
         <thead>
           <tr className="border-b border-white/10">
-            <th
+            <TableHeader
               style={{ width: 48 }}
               className="py-3 px-4 text-sm font-semibold text-left"
             >
@@ -37,19 +38,19 @@ export function AttendeeList() {
                 className="size-4 bg-black/20 rounded border border-white/10 cursor-pointer checked:bg-orange-400"
                 type="checkbox"
               />
-            </th>
-            <th className="py-3 px-4 text-sm font-semibold text-left">
+            </TableHeader>
+            <TableHeader>
               Código
-            </th>
-            <th className="py-3 px-4 text-sm font-semibold text-left">
+            </TableHeader>
+            <TableHeader>
               Participante
-            </th>
-            <th className="py-3 px-4 text-sm font-semibold text-left">
+            </TableHeader>
+            <TableHeader>
               Data de inscrição
-            </th>
-            <th className="py-3 px-4 text-sm font-semibold text-left">
+            </TableHeader>
+            <TableHeader>
               Data do check-in
-            </th>
+            </TableHeader>
             <th
               style={{ width: 64 }}
               className="py-3 px-4 text-sm font-semibold text-left"
