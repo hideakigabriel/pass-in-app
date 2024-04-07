@@ -14,24 +14,43 @@ import { Table } from "./table/table";
 import { TableHeader } from "./table/table-header";
 import { TableCell } from "./table/table-cell";
 import { TableRow } from "./table/table-row";
-import { ChangeEvent, useState } from "react";
-import { attendees } from "../data/attendees";
+import { ChangeEvent, useEffect, useState } from "react";
 
 dayjs.locale("pt-br");
 dayjs.extend(relativeTime);
 
+interface Attendee {
+  id: string,
+  name: string,
+  email: string,
+  createdAt: string,
+  checkedInAt: string | null,
+}
+
 export function AttendeeList() {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0)
+  const [ attendees, setAttendees ] = useState<Attendee[]>([])
 
-  const totalPage = Math.ceil(attendees.length / 10)
+  const totalPages = Math.ceil(total / 10)
+
+  useEffect(() => {
+    fetch("http://localhost:3333/events/9e9bd979-9d10-4915-b339-3786b1634f33/attendees")
+    .then(response => response.json())
+    .then(data => {
+      console.log(data)
+      setAttendees(data.attendees)
+      setTotal(data.total)
+    })
+  }, [page])
 
   function onSearchInputChanged(event: ChangeEvent<HTMLInputElement>) {
     setSearch(event.target.value);
   }
 
   function goToNextPage() {
-    if (page <= Math.ceil(totalPage - 1)) {
+    if (page <= Math.ceil(totalPages - 1)) {
       setPage(page + 1);
     }
   }
@@ -47,7 +66,7 @@ export function AttendeeList() {
   }
 
   function goToLastPage() {
-    setPage(totalPage);
+    setPage(totalPages);
   }
 
   return (
@@ -89,7 +108,7 @@ export function AttendeeList() {
           </tr>
         </thead>
         <tbody>
-          {attendees.slice((page - 1) * 10, page * 10).map((attendee) => {
+          {attendees.map((attendee) => {
             return (
               <TableRow
                 key={attendee.id}
@@ -111,7 +130,7 @@ export function AttendeeList() {
                   </div>
                 </TableCell>
                 <TableCell>{dayjs().to(attendee.createdAt)}</TableCell>
-                <TableCell>{dayjs().to(attendee.checkedInAt)}</TableCell>
+                <TableCell>{attendee.checkedInAt === null ? <span className="inline-flex items-center rounded-md bg-zinc-400/10 px-2 py-1 text-xs font-medium text-zinc-400 ring-1 ring-inset ring-zinc-600/10">Não fez check-in</span> : dayjs().to(attendee.checkedInAt)}</TableCell>
                 <TableCell>
                   <IconButton
                     transparent
@@ -127,12 +146,12 @@ export function AttendeeList() {
         <tfoot>
           <tr>
             <TableCell colSpan={3}>
-              Mostrando 10 de {attendees.length} itens
+              Mostrando {page} de {total} itens
             </TableCell>
             <TableCell className="text-right" colSpan={3}>
               <div className="inline-flex items-center gap-8">
                 <span>
-                  Página {page} de {totalPage}
+                  Página {page} de {totalPages}
                 </span>
                 <div className="flex gap-1.5">
                   <IconButton onClick={goToFirstPage} disabled={page === 1}>
@@ -141,10 +160,10 @@ export function AttendeeList() {
                   <IconButton onClick={goToPreviousPage} disabled={page === 1}>
                     <ChevronLeft className="size-4" />
                   </IconButton>
-                  <IconButton onClick={goToNextPage} disabled={page === totalPage}>
+                  <IconButton onClick={goToNextPage} disabled={page === totalPages}>
                     <ChevronRight className="size-4" />
                   </IconButton>
-                  <IconButton onClick={goToLastPage} disabled={page === totalPage}>
+                  <IconButton onClick={goToLastPage} disabled={page === totalPages}>
                     <ChevronsRight className="size-4" />
                   </IconButton>
                 </div>
